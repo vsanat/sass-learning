@@ -65,8 +65,11 @@ body {
     letter-spacing: 35px;
 
     animation-name: moveInLeft;
-    animation-duration: 3s;
+    animation-duration: 1s;
     animation-timing-function: ease-in;
+    /*or shorthand property
+    animation: moveInLeft 1s ease-in;
+    */
     /* animation-delay: 1s;
     animation-iteration-count: 3;
     animation-direction: reverse;
@@ -110,14 +113,26 @@ body {
     }
 }
 
+@keyframes moveInBottom{
+    0%{
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100%{
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
 .btn:link,
 .btn:visited{
     text-transform: uppercase;
     text-decoration: none;
     padding: 15px 40px;
     display: inline-block;
-    border-radius: 30px;
+    border-radius: 100px;
     transition: all .2s; /*transition and keyframes are two ways to do animation*/
+    position: relative; /*so after pseudo element can be relative to this*/
 } 
 
 .btn:hover{
@@ -133,4 +148,31 @@ body {
 .btn-white{
     background-color: #fff;
     color: #777;
+}
+ .btn::after{
+     content: "";
+     height: 100%;
+     width: 100%;
+     display: inline-block;
+     border-radius: 100px;
+     position: absolute; /*so the top and left propeties can be applied*/
+     top: 0;
+     left: 0;
+     z-index: -1; /*so it can be behind the button*/
+     transition: all .4s ease-in;
+ }
+
+ .btn-white::after{
+    background-color: #fff;
+    color: #777;
+}
+
+.btn:hover::after{
+    transform: scaleX(1.4) scaleY(1.6); /*scale(1.5);*/
+    opacity: 0;
+}
+
+.btn-animated{
+    animation: moveInBottom .5s ease-out .75s;
+    animation-fill-mode: backwards; /*applies 0% of animation at the begening itself*/
 }
